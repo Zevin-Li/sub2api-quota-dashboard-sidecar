@@ -72,6 +72,7 @@
       max-width: 1520px;
       margin: 0 auto;
       padding: 24px;
+      overflow-x: hidden;
     }
     :root[data-embedded="true"] .shell {
       max-width: none;
@@ -81,7 +82,8 @@
       position: relative;
       overflow: hidden;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 1fr) 160px;
+      align-items: stretch;
       gap: 18px;
       padding: 22px 24px;
       margin-bottom: 16px;
@@ -89,38 +91,62 @@
       border-radius: 22px;
       background: var(--panel);
       box-shadow: var(--shadow);
+      min-height: 172px;
+    }
+    .hero-main {
+      min-width: 0;
+      display: grid;
+      grid-template-rows: auto auto auto;
+      align-content: start;
+      gap: 8px;
     }
     .hero::after {
       display: none;
     }
     .hero h1 {
-      margin: 0 0 6px;
+      margin: 0;
       font-size: 28px;
       line-height: 1.1;
     }
     .hero p {
       margin: 0;
       color: var(--muted);
-      max-width: 840px;
+      max-width: 100%;
     }
     .hero-actions {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 10px;
-      min-width: 280px;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      align-items: stretch;
+      min-width: 0;
     }
     .status-line {
-      text-align: right;
+      text-align: left;
       color: var(--muted);
       font-size: 13px;
+      align-self: start;
     }
     .btn-row {
       display: flex;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
-      justify-content: flex-end;
+      justify-content: flex-start;
+      width: 100%;
+      align-self: end;
+    }
+    .truncate-1 {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .truncate-2 {
+      min-width: 0;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
     }
     button,
     input,
@@ -169,7 +195,7 @@
     }
     .toolbar {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto auto;
+      grid-template-columns: minmax(0, 1fr) minmax(0, auto);
       gap: 12px;
       margin-bottom: 16px;
     }
@@ -177,6 +203,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      min-width: 0;
       padding: 12px 14px;
       border: 1px solid var(--line);
       border-radius: 16px;
@@ -631,7 +658,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 980px;
+      min-width: 860px;
     }
     th,
     td {
@@ -674,16 +701,18 @@
     }
     .account-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 12px;
     }
     .account-card {
       display: grid;
+      grid-template-rows: 44px 78px 34px;
       gap: 12px;
       padding: 14px;
       border: 1px solid var(--line);
       border-radius: 16px;
       background: var(--panel);
+      min-height: 196px;
       min-width: 0;
       overflow: hidden;
       cursor: pointer;
@@ -708,16 +737,25 @@
     .account-top-main {
       min-width: 0;
       flex: 1 1 auto;
+      display: grid;
+      grid-template-rows: auto auto;
+      gap: 2px;
     }
     .account-name {
       font-size: 15px;
       font-weight: 700;
-      word-break: break-all;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .account-sub {
       color: var(--muted);
       font-size: 12px;
-      word-break: break-all;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .bucket-pair {
       display: grid;
@@ -755,22 +793,19 @@
     }
     .account-meta-line {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       gap: 8px;
       color: var(--muted);
       font-size: 12px;
+      min-height: 34px;
     }
     .account-meta-text {
       min-width: 0;
       flex: 1 1 auto;
       overflow: hidden;
-      word-break: break-word;
-      overflow-wrap: anywhere;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .account-meta-time {
       flex: 0 0 auto;
@@ -789,17 +824,45 @@
       box-shadow: var(--shadow);
     }
     .lane-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 14px 16px;
+      padding: 0;
       background: var(--panel-soft);
       border-bottom: 1px solid var(--line);
     }
+    .lane-toggle {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      cursor: pointer;
+      text-align: left;
+    }
+    .lane-toggle:focus-visible {
+      outline: 2px solid rgba(15, 118, 110, 0.28);
+      outline-offset: -2px;
+    }
+    .lane-toggle-text {
+      min-width: 0;
+      font-weight: 700;
+    }
+    .lane-toggle-count {
+      justify-self: end;
+    }
+    .lane.collapsed .lane-toggle-icon {
+      transform: rotate(-90deg);
+    }
+    .lane.collapsed .lane-grid,
+    .lane.collapsed .lane-pager {
+      display: none;
+    }
     .lane-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 12px;
       padding: 14px;
     }
@@ -892,6 +955,9 @@
       display: none !important;
     }
     @media (max-width: 1280px) {
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
       .cards {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
@@ -907,8 +973,10 @@
       .toolbar {
         grid-template-columns: 1fr;
       }
+      .toolbar-panel {
+        width: 100%;
+      }
       .hero-actions {
-        align-items: stretch;
         min-width: 0;
       }
       .btn-row {
@@ -918,6 +986,9 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .plan-grid {
+        grid-template-columns: 1fr;
+      }
+      .history-row {
         grid-template-columns: 1fr;
       }
     }
@@ -942,6 +1013,13 @@
       .select {
         width: 100%;
       }
+      table {
+        min-width: 720px;
+      }
+      .account-grid,
+      .lane-grid {
+        grid-template-columns: 1fr;
+      }
       .detail-grid {
         grid-template-columns: 1fr;
       }
@@ -954,19 +1032,1221 @@
       }
     }
   </style>
+  <style>
+    :root {
+      --bg: #f4f8fb;
+      --bg-alt: #edf4f8;
+      --panel: rgba(255, 255, 255, 0.82);
+      --panel-solid: #fdfefe;
+      --panel-soft: rgba(240, 246, 250, 0.76);
+      --panel-strong: #13232b;
+      --text: #18262e;
+      --text-strong: #0e1a21;
+      --muted: #62727d;
+      --muted-strong: #445560;
+      --line: rgba(20, 41, 54, 0.1);
+      --line-strong: rgba(20, 41, 54, 0.18);
+      --accent: #0f766e;
+      --accent-2: #1aa7a1;
+      --accent-strong: #0b5a55;
+      --accent-soft: rgba(15, 118, 110, 0.12);
+      --good: #15803d;
+      --good-soft: rgba(21, 128, 61, 0.14);
+      --warn: #0f766e;
+      --warn-soft: rgba(15, 118, 110, 0.12);
+      --bad: #c14034;
+      --bad-soft: rgba(193, 64, 52, 0.14);
+      --info: #2563eb;
+      --info-soft: rgba(37, 99, 235, 0.14);
+      --shadow-sm: 0 10px 24px rgba(15, 23, 42, 0.08);
+      --shadow: 0 18px 44px rgba(15, 23, 42, 0.1);
+      --shadow-strong: 0 28px 70px rgba(2, 12, 27, 0.22);
+      --radius: 24px;
+    }
+    :root[data-theme="dark"] {
+      --bg: #06121a;
+      --bg-alt: #0b1923;
+      --panel: rgba(11, 20, 31, 0.78);
+      --panel-solid: #0d1722;
+      --panel-soft: rgba(15, 28, 41, 0.8);
+      --panel-strong: #eef6fa;
+      --text: #ecf5f9;
+      --text-strong: #ffffff;
+      --muted: #94a8b6;
+      --muted-strong: #c8d7df;
+      --line: rgba(148, 168, 182, 0.16);
+      --line-strong: rgba(148, 168, 182, 0.3);
+      --accent: #2dd4bf;
+      --accent-2: #67e8f9;
+      --accent-strong: #99f6e4;
+      --accent-soft: rgba(45, 212, 191, 0.16);
+      --good: #4ade80;
+      --good-soft: rgba(74, 222, 128, 0.14);
+      --warn: #38bdf8;
+      --warn-soft: rgba(56, 189, 248, 0.16);
+      --bad: #ff8d7d;
+      --bad-soft: rgba(255, 141, 125, 0.16);
+      --info: #7cb6ff;
+      --info-soft: rgba(124, 182, 255, 0.16);
+      --shadow-sm: 0 12px 26px rgba(0, 0, 0, 0.24);
+      --shadow: 0 24px 52px rgba(0, 0, 0, 0.32);
+      --shadow-strong: 0 32px 80px rgba(0, 0, 0, 0.5);
+    }
+    html {
+      background:
+        radial-gradient(circle at 12% 10%, rgba(15, 118, 110, 0.14), transparent 34%),
+        radial-gradient(circle at 88% 8%, rgba(37, 99, 235, 0.1), transparent 28%),
+        linear-gradient(180deg, var(--bg), var(--bg-alt));
+      scrollbar-color: rgba(68, 85, 96, 0.34) transparent;
+      scrollbar-gutter: stable;
+    }
+    body {
+      position: relative;
+      overflow-x: hidden;
+      background: linear-gradient(180deg, var(--bg), var(--bg-alt));
+      color: var(--text);
+      font: 14px/1.6 "Avenir Next", "SF Pro Display", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      letter-spacing: 0.01em;
+    }
+    body.detail-open {
+      overflow: hidden;
+    }
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::before {
+      background:
+        radial-gradient(circle at 12% 10%, rgba(15, 118, 110, 0.14), transparent 34%),
+        radial-gradient(circle at 88% 8%, rgba(37, 99, 235, 0.1), transparent 28%),
+        radial-gradient(circle at 80% 84%, rgba(26, 167, 161, 0.08), transparent 26%);
+      filter: blur(8px);
+    }
+    body::after {
+      opacity: 0.45;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.35), transparent 72%);
+      -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.35), transparent 72%);
+    }
+    *::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    *::-webkit-scrollbar-thumb {
+      border: 2px solid transparent;
+      border-radius: 999px;
+      background: rgba(68, 85, 96, 0.3);
+      background-clip: padding-box;
+    }
+    *::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.14);
+    }
+    .shell {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 18px;
+      max-width: 1600px;
+      padding: 28px 28px 56px;
+    }
+    :root[data-embedded="true"] .shell {
+      padding: 16px;
+    }
+    .hero,
+    .toolbar,
+    .banner {
+      margin-bottom: 0;
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.75fr);
+      gap: 24px;
+      min-height: 216px;
+      padding: 32px;
+      border: 1px solid rgba(139, 205, 211, 0.24);
+      border-radius: 34px;
+      background:
+        linear-gradient(135deg, rgba(248, 253, 254, 0.99) 0%, rgba(236, 249, 248, 0.99) 46%, rgba(220, 246, 248, 0.97) 100%);
+      box-shadow: var(--shadow-strong);
+      color: #123540;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -20%;
+      right: -6%;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(103, 232, 249, 0.16), rgba(103, 232, 249, 0));
+      pointer-events: none;
+    }
+    .hero::after {
+      display: block;
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(120deg, rgba(255, 255, 255, 0.22), transparent 30%),
+        linear-gradient(150deg, transparent 55%, rgba(45, 212, 191, 0.05));
+      pointer-events: none;
+    }
+    .hero-main,
+    .hero-actions {
+      position: relative;
+      z-index: 1;
+    }
+    .hero-main {
+      gap: 14px;
+    }
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(18, 73, 82, 0.1);
+      background: rgba(255, 255, 255, 0.52);
+      color: rgba(18, 73, 82, 0.72);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .hero-kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #67e8f9, #2dd4bf);
+      box-shadow: 0 0 0 4px rgba(103, 232, 249, 0.12);
+    }
+    .hero h1 {
+      max-width: 11ch;
+      font-size: clamp(34px, 4.4vw, 54px);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+      color: #0f2f39;
+      text-wrap: balance;
+    }
+    .hero .truncate-1 {
+      overflow: visible;
+      text-overflow: clip;
+      white-space: normal;
+    }
+    .hero p {
+      max-width: 60ch;
+      color: rgba(18, 73, 82, 0.78);
+      font-size: 14px;
+    }
+    .hero-note {
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(18, 73, 82, 0.08);
+      background: rgba(255, 255, 255, 0.52);
+      backdrop-filter: blur(16px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.46);
+    }
+    .hero-actions {
+      gap: 16px;
+      grid-template-rows: 1fr auto;
+    }
+    .hero-status-card {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+      padding: 18px 18px 16px;
+      border-radius: 24px;
+      border: 1px solid rgba(18, 73, 82, 0.08);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.38));
+      backdrop-filter: blur(18px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.52);
+      min-height: 112px;
+    }
+    .hero-status-label {
+      color: rgba(18, 73, 82, 0.58);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .status-line {
+      color: #123540;
+      font-size: 14px;
+      line-height: 1.65;
+      text-wrap: balance;
+    }
+    .btn-row {
+      gap: 12px;
+      align-items: center;
+      align-self: end;
+    }
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(18, 73, 82, 0.1);
+      background: rgba(255, 255, 255, 0.5);
+      color: rgba(18, 73, 82, 0.82);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .btn {
+      min-width: 120px;
+      height: 46px;
+      padding: 0 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 30px rgba(11, 19, 16, 0.14);
+    }
+    .btn-primary {
+      border-color: rgba(15, 118, 110, 0.18);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(234, 249, 247, 0.94));
+      background-clip: padding-box;
+      color: #0f766e;
+      box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    }
+    .btn-secondary {
+      border-color: var(--line);
+      background: rgba(255, 255, 255, 0.68);
+      backdrop-filter: blur(12px);
+    }
+    .banner {
+      padding: 16px 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(193, 64, 52, 0.18);
+      background: linear-gradient(135deg, rgba(193, 64, 52, 0.12), rgba(193, 64, 52, 0.06));
+      box-shadow: var(--shadow-sm);
+    }
+    .toolbar {
+      position: sticky;
+      top: 18px;
+      z-index: 18;
+      gap: 14px;
+      align-items: stretch;
+    }
+    :root[data-embedded="true"] .toolbar {
+      position: static;
+    }
+    .toolbar-panel {
+      position: relative;
+      overflow: hidden;
+      gap: 14px;
+      padding: 14px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.44);
+      border-radius: 24px;
+      background: var(--panel);
+      backdrop-filter: blur(20px) saturate(160%);
+      box-shadow: var(--shadow);
+      min-height: 74px;
+    }
+    .toolbar-panel::before,
+    .card::after,
+    .account-card::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+    .toolbar-panel::before {
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), transparent 38%);
+    }
+    .toolbar-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .scope-tabs,
+    .view-tabs {
+      gap: 8px;
+      padding: 6px;
+      border-radius: 999px;
+      background: rgba(23, 33, 29, 0.04);
+      border: 1px solid var(--line);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.44);
+    }
+    .scope-tab,
+    .view-tab {
+      min-height: 40px;
+      padding: 0 18px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+    }
+    .scope-tab:hover,
+    .view-tab:hover {
+      color: var(--text-strong);
+      transform: translateY(-1px);
+    }
+    .scope-tab.active,
+    .view-tab.active {
+      background: linear-gradient(135deg, rgba(15, 118, 110, 0.14), rgba(255, 255, 255, 0.94));
+      color: var(--accent-strong);
+      box-shadow: 0 10px 22px rgba(17, 25, 22, 0.08);
+    }
+    .filters {
+      gap: 12px;
+    }
+    .filter-summary {
+      flex: 1 1 100%;
+      min-width: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .input,
+    .select,
+    .pager-size-select {
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--text);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+    :root[data-theme="dark"] .input,
+    :root[data-theme="dark"] .select,
+    :root[data-theme="dark"] .pager-size-select,
+    :root[data-theme="dark"] .btn-secondary,
+    :root[data-theme="dark"] .pager-btn,
+    :root[data-theme="dark"] .pager-dots,
+    :root[data-theme="dark"] .close-btn {
+      background: rgba(18, 28, 42, 0.82);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    .input:hover,
+    .select:hover,
+    .pager-size-select:hover {
+      border-color: var(--line-strong);
+    }
+    .input {
+      flex: 1 1 260px;
+      width: auto;
+      min-width: 220px;
+      padding: 0 14px;
+    }
+    .select {
+      flex: 0 1 180px;
+      min-width: 150px;
+      padding: 0 14px;
+    }
+    th[data-sort-key] {
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.18s ease, background 0.18s ease;
+    }
+    th[data-sort-key]::after {
+      content: "";
+      display: inline-block;
+      min-width: 10px;
+      margin-left: 6px;
+      text-align: center;
+      color: var(--muted);
+    }
+    th[data-sort-key]:hover {
+      color: var(--accent-strong);
+    }
+    th[data-sort-active="true"] {
+      color: var(--text-strong);
+    }
+    th[data-sort-active="true"][data-sort-dir="asc"]::after {
+      content: "↑";
+      color: var(--accent-strong);
+    }
+    th[data-sort-active="true"][data-sort-dir="desc"]::after {
+      content: "↓";
+      color: var(--accent-strong);
+    }
+    .page.active {
+      animation: page-enter 0.28s ease both;
+    }
+    .cards {
+      gap: 14px;
+    }
+    .card,
+    .panel,
+    .lane,
+    .account-card,
+    .detail-block {
+      border: 1px solid rgba(255, 255, 255, 0.46);
+      background: var(--panel);
+      backdrop-filter: blur(18px) saturate(160%);
+      box-shadow: var(--shadow);
+    }
+    .card {
+      display: grid;
+      gap: 8px;
+      min-height: 156px;
+      padding: 20px 18px 18px;
+      border-radius: 26px;
+    }
+    .card::before {
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2) 46%, var(--info));
+    }
+    .card::after {
+      top: -28px;
+      right: -24px;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(15, 118, 110, 0.18), rgba(15, 118, 110, 0));
+    }
+    .card:nth-child(2)::before {
+      background: linear-gradient(90deg, #2563eb, #67e8f9 50%, #0f766e);
+    }
+    .card:nth-child(3)::before {
+      background: linear-gradient(90deg, #2563eb, #60a5fa 52%, #0f766e);
+    }
+    .card:nth-child(4)::before {
+      background: linear-gradient(90deg, #0f766e, #2dd4bf 54%, #2563eb);
+    }
+    .card:nth-child(5)::before {
+      background: linear-gradient(90deg, #c14034, #df7d53 52%, #38bdf8);
+    }
+    .card:nth-child(6)::before {
+      background: linear-gradient(90deg, #2563eb, #0f766e 60%, #67e8f9);
+    }
+    .card .label {
+      color: var(--muted-strong);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .card .value {
+      margin-top: 2px;
+      font-size: clamp(30px, 3vw, 42px);
+      line-height: 0.98;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      color: var(--text-strong);
+    }
+    .card .meta {
+      margin-top: 0;
+      color: var(--muted);
+      font-size: 12px;
+      max-width: 34ch;
+    }
+    .card .mini-bar {
+      height: 9px;
+      margin-top: auto;
+      background: rgba(23, 33, 29, 0.08);
+    }
+    .card .mini-bar > span {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2) 58%, var(--info));
+    }
+    .grid-2 {
+      gap: 18px;
+      grid-template-columns: minmax(0, 1.28fr) minmax(320px, 0.92fr);
+    }
+    .panel,
+    .lane {
+      border-radius: 28px;
+      overflow: hidden;
+    }
+    .panel-head {
+      gap: 14px;
+      padding: 18px 20px 0;
+    }
+    .panel-toggle {
+      gap: 14px;
+      align-items: center;
+    }
+    .panel-title {
+      min-height: auto;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .panel-toggle-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(23, 33, 29, 0.04);
+      color: var(--accent-strong);
+      font-size: 13px;
+      align-self: center;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+    .panel-toggle:hover .panel-title {
+      color: var(--accent-strong);
+    }
+    .panel-toggle:hover .panel-toggle-icon,
+    .panel-toggle:focus-visible .panel-toggle-icon,
+    .panel-toggle:active .panel-toggle-icon {
+      border-color: rgba(12, 122, 104, 0.22);
+      background: rgba(12, 122, 104, 0.1);
+      color: var(--accent);
+    }
+    .caption,
+    .panel-head .caption {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .panel-body {
+      padding: 18px 20px 20px;
+    }
+    .panel.collapsed .panel-head {
+      padding-bottom: 18px;
+    }
+    .panel.collapsed [data-collapse-id="recovery-main"] .panel-toggle-text::after {
+      content: "已收起，点击展开";
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .panel-stack,
+    .plan-grid,
+    .state-grid,
+    .history-grid,
+    .bucket-stack,
+    .meter,
+    .bucket-pair,
+    .bucket-chip,
+    .lane-wrap,
+    .detail-grid {
+      gap: 14px;
+    }
+    .pill {
+      height: 30px;
+      padding: 0 12px;
+      border: 1px solid transparent;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .pill-good {
+      border-color: rgba(21, 127, 83, 0.14);
+    }
+    .pill-warn {
+      border-color: rgba(184, 104, 26, 0.16);
+    }
+    .pill-bad {
+      border-color: rgba(193, 64, 52, 0.16);
+    }
+    .pill-info {
+      border-color: rgba(33, 95, 203, 0.16);
+    }
+    .pill-neutral {
+      border-color: var(--line);
+      background: rgba(23, 33, 29, 0.04);
+      color: var(--muted-strong);
+    }
+    .plan-card {
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(238, 246, 251, 0.94));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+    :root[data-theme="dark"] .plan-card,
+    :root[data-theme="dark"] .bucket,
+    :root[data-theme="dark"] .state-row,
+    :root[data-theme="dark"] .history-row,
+    :root[data-theme="dark"] .detail-block {
+      background: linear-gradient(180deg, rgba(17, 28, 42, 0.82), rgba(10, 20, 31, 0.82));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+    .plan-head {
+      margin-bottom: 14px;
+    }
+    .plan-name {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .plan-count {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(23, 33, 29, 0.05);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .bucket {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78);
+    }
+    .bucket-top {
+      margin-bottom: 10px;
+    }
+    .bucket-title,
+    .state-row .name,
+    .history-row .name {
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .bucket-total {
+      font-size: 28px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .bucket-meta,
+    .state-row .hint,
+    .history-row .hint {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .meter-track,
+    .bucket-chip-track {
+      height: 10px;
+      background: rgba(23, 33, 29, 0.08);
+    }
+    .state-row,
+    .history-row {
+      position: relative;
+      overflow: hidden;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(244, 236, 226, 0.64));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    }
+    .state-row::before,
+    .history-row::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--accent), var(--info));
+      opacity: 0.9;
+    }
+    .state-row .count,
+    .history-row .count {
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .history-row {
+      grid-template-columns: 170px minmax(0, 1fr) auto;
+    }
+    .table-wrap {
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.68);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76);
+    }
+    table {
+      min-width: 980px;
+    }
+    th,
+    td {
+      padding: 14px 16px;
+    }
+    th {
+      top: 0;
+      background: rgba(248, 251, 253, 0.92);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      backdrop-filter: blur(14px);
+    }
+    :root[data-theme="dark"] th {
+      background: rgba(13, 23, 34, 0.92);
+    }
+    tbody tr:nth-child(even) {
+      background: rgba(23, 33, 29, 0.02);
+    }
+    tbody tr:hover {
+      background: linear-gradient(90deg, rgba(12, 122, 104, 0.08), rgba(12, 122, 104, 0.03));
+    }
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+    .mono {
+      font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+      letter-spacing: -0.02em;
+    }
+    .account-grid,
+    .lane-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 14px;
+    }
+    .account-card {
+      align-content: start;
+      grid-template-rows: auto minmax(96px, 1fr) auto;
+      min-height: 232px;
+      isolation: isolate;
+      position: relative;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(239, 246, 251, 0.8));
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+    .account-card::before {
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2) 54%, var(--info));
+      opacity: 0.96;
+    }
+    .account-card::after {
+      top: -18px;
+      right: -18px;
+      width: 132px;
+      height: 132px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(15, 118, 110, 0.18), rgba(15, 118, 110, 0));
+    }
+    .account-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 26px 50px rgba(17, 25, 22, 0.14);
+    }
+    .account-card.active {
+      border-color: rgba(12, 122, 104, 0.38);
+      box-shadow: 0 0 0 1px rgba(12, 122, 104, 0.16), 0 26px 50px rgba(17, 25, 22, 0.16);
+    }
+    .account-card.failed {
+      border-color: rgba(193, 64, 52, 0.2);
+    }
+    .account-card.failed::before {
+      background: linear-gradient(90deg, #c14034, #de6f55 54%, #38bdf8);
+    }
+    .account-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      min-width: 0;
+      gap: 10px;
+    }
+    .account-top-main {
+      min-width: 0;
+      flex: 1 1 auto;
+      display: grid;
+      align-content: start;
+      gap: 4px;
+    }
+    .account-name {
+      min-width: 0;
+      min-height: 2.6em;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      white-space: normal;
+      word-break: break-word;
+    }
+    .account-sub {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .bucket-pair,
+    .bucket-chip {
+      min-width: 0;
+    }
+    .bucket-chip-top {
+      align-items: flex-start;
+      font-size: 12px;
+      color: var(--muted-strong);
+    }
+    .bucket-chip-top > span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .bucket-chip-top > strong {
+      flex: 0 0 auto;
+      padding-left: 8px;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-strong);
+    }
+    .account-meta-line {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 10px;
+      min-height: 40px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(23, 33, 29, 0.12);
+    }
+    .account-meta-text {
+      min-width: 0;
+      min-height: 2.8em;
+      line-height: 1.45;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      white-space: normal;
+    }
+    .account-meta-time {
+      max-width: 132px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(23, 33, 29, 0.04);
+      color: var(--muted-strong);
+      font-size: 11px;
+    }
+    .lane {
+      border-radius: 24px;
+    }
+    .lane-head {
+      background: linear-gradient(180deg, rgba(12, 122, 104, 0.06), rgba(255, 255, 255, 0.42));
+      border-bottom: 1px solid var(--line);
+    }
+    .lane-toggle {
+      padding: 16px 18px;
+    }
+    .lane-toggle-text {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.35;
+    }
+    .lane-grid {
+      padding: 16px;
+    }
+    .lane-pager {
+      padding: 0 16px 16px;
+    }
+    .pager,
+    .pager-controls {
+      gap: 10px;
+    }
+    .pager-info {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .pager-btn,
+    .pager-dots {
+      min-width: 36px;
+      height: 36px;
+      padding: 0 12px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--text);
+    }
+    .pager-btn:hover:not(:disabled) {
+      border-color: rgba(12, 122, 104, 0.22);
+      background: rgba(12, 122, 104, 0.06);
+    }
+    .pager-btn.active {
+      border-color: rgba(12, 122, 104, 0.28);
+      background: linear-gradient(135deg, rgba(15, 118, 110, 0.12), rgba(255, 255, 255, 0.96));
+      color: var(--accent-strong);
+      box-shadow: 0 10px 20px rgba(17, 25, 22, 0.08);
+    }
+    .pager-size-select {
+      width: 92px;
+      height: 36px;
+      margin: 0 4px;
+      padding: 0 10px;
+    }
+    .side-backdrop {
+      background: rgba(7, 17, 13, 0.46);
+      backdrop-filter: blur(6px);
+    }
+    .side {
+      display: flex;
+      flex-direction: column;
+      width: min(520px, 100vw);
+      background: linear-gradient(180deg, rgba(248, 251, 253, 0.96), rgba(238, 246, 251, 0.96));
+      border-left: 1px solid rgba(255, 255, 255, 0.48);
+      box-shadow: -20px 0 60px rgba(7, 17, 13, 0.2);
+      backdrop-filter: blur(20px);
+      overflow: hidden;
+    }
+    :root[data-theme="dark"] .side {
+      background: linear-gradient(180deg, rgba(10, 18, 29, 0.96), rgba(10, 22, 26, 0.96));
+    }
+    .side-head {
+      align-items: center;
+      padding: 22px 20px 14px;
+    }
+    .side-head-copy {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+    .side-head h2 {
+      margin: 0 0 6px;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      word-break: break-word;
+    }
+    .close-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 72px;
+      height: 40px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--text);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+    .close-btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--line-strong);
+      background: rgba(255, 255, 255, 0.92);
+    }
+    .side-body {
+      flex: 1 1 auto;
+      height: auto;
+      padding: 18px 20px 24px;
+      gap: 16px;
+    }
+    .detail-block {
+      padding: 16px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    }
+    .detail-block h3 {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .detail-item {
+      gap: 6px;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(23, 33, 29, 0.03);
+    }
+    .detail-key {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .detail-value {
+      color: var(--text-strong);
+      font-size: 14px;
+      line-height: 1.55;
+      font-weight: 700;
+    }
+    .empty {
+      padding: 26px 20px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.34);
+      color: var(--muted);
+    }
+    @keyframes page-enter {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @media (max-width: 1360px) {
+      .cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .plan-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 1100px) {
+      .hero,
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+      .toolbar {
+        position: static;
+      }
+      .hero h1 {
+        max-width: none;
+      }
+      .toolbar-panel {
+        width: 100%;
+      }
+    }
+    @media (max-width: 920px) {
+      .shell {
+        padding: 18px 18px 40px;
+      }
+      .hero {
+        padding: 24px;
+        border-radius: 28px;
+      }
+      .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .plan-grid,
+      .history-row {
+        grid-template-columns: 1fr;
+      }
+      .history-row .count {
+        justify-self: start;
+      }
+    }
+    @media (max-width: 640px) {
+      .shell {
+        padding: 12px 12px 28px;
+      }
+      .hero {
+        gap: 18px;
+        padding: 20px;
+        min-height: 0;
+      }
+      .hero h1 {
+        font-size: 30px;
+        max-width: none;
+      }
+      .hero-status-card {
+        min-height: 0;
+      }
+      .hero-chip,
+      .btn,
+      .close-btn {
+        width: 100%;
+      }
+      .btn-row,
+      .filters {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .input,
+      .select {
+        width: 100%;
+        min-width: 0;
+      }
+      .cards,
+      .plan-grid,
+      .account-grid,
+      .lane-grid,
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+      .panel,
+      .lane,
+      .card,
+      .account-card,
+      .detail-block {
+        border-radius: 22px;
+      }
+      table {
+        min-width: 760px;
+      }
+      .side {
+        width: 100vw;
+      }
+      .side-head,
+      .side-body {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .pager {
+        align-items: stretch;
+      }
+      .pager-controls {
+        margin-left: 0;
+        justify-content: flex-start;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .page.active,
+      .btn,
+      .scope-tab,
+      .view-tab,
+      .account-card,
+      .close-btn {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="shell">
     <section class="hero">
-      <div>
-        <h1>账号额度与健康状态</h1>
-        <p id="scopeNote">
+      <div class="hero-main">
+        <span class="hero-kicker">Quota Command Center</span>
+        <h1 class="truncate-1" title="账号额度与健康状态">账号额度与健康状态</h1>
+        <p id="scopeNote" class="hero-note truncate-2" title="周额度均值按「周额度累计总量 / 存活账号数」计算，可调度数量仅作为辅助健康信息展示。">
           周额度均值按「周额度累计总量 / 存活账号数」计算，可调度数量仅作为辅助健康信息展示。
         </p>
       </div>
       <div class="hero-actions">
-        <div id="statusLine" class="status-line">正在读取上次结果...</div>
+        <div class="hero-status-card">
+          <div class="hero-status-label">数据状态</div>
+          <div id="statusLine" class="status-line truncate-2" title="正在读取上次结果...">正在读取上次结果...</div>
+        </div>
         <div class="btn-row">
+          <span class="hero-chip">实时聚合</span>
           <button id="refresh" class="btn btn-primary" type="button">刷新额度</button>
         </div>
       </div>
@@ -1004,6 +2284,7 @@
             <option value="limited">仅受限账号</option>
             <option value="recovering">仅恢复/受限</option>
           </select>
+          <div id="filterSummary" class="filter-summary">当前匹配 0 个账号</div>
         </div>
       </div>
     </section>
@@ -1066,7 +2347,7 @@
                 <span class="panel-toggle-icon">▾</span>
                 <span class="panel-toggle-text">
                   <h2 class="panel-title">最近快照</h2>
-                  <div class="caption">历史快照保存在独立统计表里，支持分页查看。</div>
+                  <div class="caption">这里只展示真实额度刷新完成后写入的快照，不再因为打开页面而新增历史。</div>
                 </span>
               </button>
             </div>
@@ -1126,7 +2407,7 @@
               <span class="panel-toggle-icon">▾</span>
               <span class="panel-toggle-text">
                 <h2 class="panel-title">统计历史</h2>
-                <div class="caption">每次自动快照都会记录账号健康与额度变化，支持分页查看。</div>
+                  <div class="caption">每次真实额度刷新完成后，记录一条带新鲜度信息的历史快照。</div>
               </span>
             </button>
           </div>
@@ -1137,12 +2418,15 @@
             <table>
               <thead>
                 <tr>
-                  <th data-sort-key="captured_at">时间</th>
+                  <th data-sort-key="captured_at">快照时间</th>
+                  <th data-sort-key="refresh_completed_at">刷新完成</th>
+                  <th data-sort-key="max_usage_updated_at">最新额度时间</th>
                   <th data-sort-key="total_accounts">总账号</th>
                   <th data-sort-key="healthy_accounts">健康</th>
                   <th data-sort-key="recovering_accounts">恢复中</th>
                   <th data-sort-key="quota_limited_accounts">额度限制</th>
                   <th data-sort-key="failed_accounts">失败</th>
+                  <th data-sort-key="stale_accounts">未触达</th>
                   <th data-sort-key="tracked_7d_accounts">周额度成功</th>
                   <th data-sort-key="schedulable_tracked_7d_accounts">可调度周额度成功</th>
                   <th data-sort-key="avg_all_7d_remaining_pct">全量周额度均值</th>
@@ -1163,10 +2447,11 @@
   <div id="sideBackdrop" class="side-backdrop"></div>
   <aside id="detailSide" class="side" aria-hidden="true">
     <div class="side-head">
-      <div>
+      <div class="side-head-copy">
         <h2 id="detailTitle">账号详情</h2>
         <div id="detailSubtitle" class="caption"></div>
       </div>
+      <button id="closeDetail" class="close-btn" type="button" aria-label="关闭详情">关闭</button>
     </div>
     <div id="detailBody" class="side-body"></div>
   </aside>
@@ -1494,7 +2779,9 @@
         var id = toggle.getAttribute("data-collapse-id");
         var collapsed = !!state.collapsedPanels[id];
         var panel = toggle.closest(".panel");
-        if (panel) panel.classList.toggle("collapsed", collapsed);
+        var lane = toggle.closest(".lane");
+        if (panel && id.indexOf("lane:") !== 0) panel.classList.toggle("collapsed", collapsed);
+        if (lane) lane.classList.toggle("collapsed", collapsed);
         toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
       });
     }
@@ -1536,10 +2823,30 @@
         parseTime(row.overload_until);
     }
 
+    function laneTimeValue(row) {
+      return parseTime(row.weekly_recovery_at) ||
+        parseTime(row.weekly_next_reset_at) ||
+        parseTime(row.codex_7d_next_reset_at) ||
+        parseTime(row.codex_primary_next_reset_at) ||
+        parseTime(row.earliest_recovery_at) ||
+        parseTime(row.five_hour_recovery_at) ||
+        parseTime(row.five_hour_next_reset_at) ||
+        parseTime(row.rate_limit_reset_at) ||
+        parseTime(row.temp_unschedulable_until) ||
+        parseTime(row.overload_until);
+    }
+
     function recoveryCandidates(list) {
       return list.filter(function (row) {
         return row.state_key === "recovering" || row.state_key === "quota_limited";
       });
+    }
+
+    function weeklySortTimeValue(row) {
+      return parseTime(row.weekly_recovery_at) ||
+        parseTime(row.weekly_next_reset_at) ||
+        parseTime(row.codex_7d_next_reset_at) ||
+        parseTime(row.codex_primary_next_reset_at);
     }
 
     function sortAccounts(list) {
@@ -1554,11 +2861,14 @@
         var leftRank = stateRank[left.state_key] == null ? 9 : stateRank[left.state_key];
         var rightRank = stateRank[right.state_key] == null ? 9 : stateRank[right.state_key];
         if (leftRank !== rightRank) return leftRank - rightRank;
+        var leftWeeklyReset = weeklySortTimeValue(left) || Number.MAX_SAFE_INTEGER;
+        var rightWeeklyReset = weeklySortTimeValue(right) || Number.MAX_SAFE_INTEGER;
+        if (leftWeeklyReset !== rightWeeklyReset) return leftWeeklyReset - rightWeeklyReset;
         var leftPct = left.weekly_remaining_percent == null ? 999 : Number(left.weekly_remaining_percent);
         var rightPct = right.weekly_remaining_percent == null ? 999 : Number(right.weekly_remaining_percent);
         if (leftPct !== rightPct) return leftPct - rightPct;
-        var leftReset = parseTime(left.earliest_recovery_at) || parseTime(left.weekly_next_reset_at) || parseTime(left.five_hour_next_reset_at) || Number.MAX_SAFE_INTEGER;
-        var rightReset = parseTime(right.earliest_recovery_at) || parseTime(right.weekly_next_reset_at) || parseTime(right.five_hour_next_reset_at) || Number.MAX_SAFE_INTEGER;
+        var leftReset = recoveryTimeValue(left) || Number.MAX_SAFE_INTEGER;
+        var rightReset = recoveryTimeValue(right) || Number.MAX_SAFE_INTEGER;
         if (leftReset !== rightReset) return leftReset - rightReset;
         return String(left.name || "").localeCompare(String(right.name || ""), "zh-CN");
       });
@@ -1580,12 +2890,19 @@
     }
 
     function laneKeyFor(row) {
-      var ts = recoveryTimeValue(row);
+      var ts = laneTimeValue(row);
       if (!ts) return "unknown";
-      var diffHours = (ts - Date.now()) / 3600000;
-      if (diffHours <= 6) return "immediate";
-      if (diffHours <= 24) return "today";
-      if (diffHours <= 72) return "soon";
+      var nowTs = Date.now();
+      var now = new Date();
+      var target = new Date(ts);
+      var startOfTomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      var startOfDayAfterTomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2);
+      var startOfThreeDaysLater = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 4);
+
+      if (ts <= nowTs + 6 * 3600000) return "immediate";
+      if (target < startOfTomorrow) return "today";
+      if (target < startOfDayAfterTomorrow) return "tomorrow";
+      if (target < startOfThreeDaysLater) return "soon";
       return "later";
     }
 
@@ -1593,6 +2910,7 @@
       switch (key) {
         case "immediate": return "即将恢复";
         case "today": return "今日恢复";
+        case "tomorrow": return "明日恢复";
         case "soon": return "三天内恢复";
         case "later": return "更晚恢复";
         default: return "恢复时间未知";
@@ -1634,6 +2952,57 @@
         end: Math.min(total, startIndex + size),
         items: list.slice(startIndex, startIndex + size)
       };
+    }
+
+    function compareNullable(left, right, direction) {
+      var leftMissing = left === null || left === undefined || left === "";
+      var rightMissing = right === null || right === undefined || right === "";
+      if (leftMissing && rightMissing) return 0;
+      if (leftMissing) return 1;
+      if (rightMissing) return -1;
+      if (left < right) return direction === "asc" ? -1 : 1;
+      if (left > right) return direction === "asc" ? 1 : -1;
+      return 0;
+    }
+
+    function historySortValue(row, key) {
+      if (!row) return null;
+      if (key === "captured_at" || key === "refresh_completed_at" || key === "max_usage_updated_at") {
+        return parseTime(row[key]);
+      }
+      if (row[key] === null || row[key] === undefined || row[key] === "") return null;
+      var num = Number(row[key]);
+      return isNaN(num) ? String(row[key]) : num;
+    }
+
+    function sortedHistoryRows() {
+      var list = (state.payload && state.payload.history ? state.payload.history.slice() : []);
+      var key = state.historySortKey || "captured_at";
+      var direction = state.historySortDir || "desc";
+      list.sort(function (left, right) {
+        var leftValue = historySortValue(left, key);
+        var rightValue = historySortValue(right, key);
+        var diff;
+        if (typeof leftValue === "string" || typeof rightValue === "string") {
+          diff = String(leftValue || "").localeCompare(String(rightValue || ""), "zh-CN", { numeric: true, sensitivity: "base" });
+          if (diff) return direction === "asc" ? diff : -diff;
+        } else {
+          diff = compareNullable(leftValue, rightValue, direction);
+          if (diff) return diff;
+        }
+        return compareNullable(parseTime(right.captured_at), parseTime(left.captured_at), "asc");
+      });
+      return list;
+    }
+
+    function syncHistorySortHeaders() {
+      Array.prototype.slice.call(document.querySelectorAll("th[data-sort-key]")).forEach(function (cell) {
+        var key = cell.getAttribute("data-sort-key");
+        var active = key === state.historySortKey;
+        cell.setAttribute("data-sort-active", active ? "true" : "false");
+        cell.setAttribute("data-sort-dir", active ? state.historySortDir : "");
+        cell.title = active ? ("当前按此列" + (state.historySortDir === "asc" ? "升序" : "降序")) : "点击按此列排序";
+      });
     }
 
     function pageSeries(current, totalPages) {
@@ -1700,12 +3069,14 @@
       var five = row.five_hour_remaining_percent;
       var weeklyReset = row.weekly_recovery_at || row.weekly_next_reset_at || row.codex_7d_next_reset_at;
       var fiveReset = row.five_hour_recovery_at || row.five_hour_next_reset_at || row.codex_5h_next_reset_at;
+      var nameText = row.name || "-";
+      var subText = "#" + row.id + " · " + planLabel(row.plan_type);
       return '' +
         '<button class="account-card' + (state.selectedId === row.id ? ' active' : '') + (row.state_key === "failed" ? ' failed' : '') + '" type="button" data-account-id="' + escapeHtml(row.id) + '">' +
           '<div class="account-top">' +
             '<div class="account-top-main">' +
-              '<div class="account-name">' + escapeHtml(row.name || "-") + '</div>' +
-              '<div class="account-sub">#' + escapeHtml(row.id) + ' · ' + escapeHtml(planLabel(row.plan_type)) + '</div>' +
+              '<div class="account-name" title="' + escapeHtml(nameText) + '">' + escapeHtml(nameText) + '</div>' +
+              '<div class="account-sub" title="' + escapeHtml(subText) + '">' + escapeHtml(subText) + '</div>' +
             '</div>' +
             '<span class="' + statePillClass(row.state_key) + '">' + escapeHtml(stateLabel(row.state_key)) + '</span>' +
           '</div>' +
@@ -1713,23 +3084,24 @@
             '<div class="bucket-chip">' +
               '<div class="bucket-chip-top"><span>周额度</span><strong>' + escapeHtml(shortPct(weekly)) + '</strong></div>' +
               bucketBar(weekly) +
-              '<div class="account-sub">恢复：' + escapeHtml(dt(weeklyReset)) + '</div>' +
+              '<div class="account-sub" title="恢复：' + escapeHtml(dt(weeklyReset)) + '">恢复：' + escapeHtml(dt(weeklyReset)) + '</div>' +
             '</div>' +
             '<div class="bucket-chip">' +
               '<div class="bucket-chip-top"><span>5h 额度</span><strong>' + escapeHtml(shortPct(five)) + '</strong></div>' +
               bucketBar(five) +
-              '<div class="account-sub">恢复：' + escapeHtml(dt(fiveReset)) + '</div>' +
+              '<div class="account-sub" title="恢复：' + escapeHtml(dt(fiveReset)) + '">恢复：' + escapeHtml(dt(fiveReset)) + '</div>' +
             '</div>' +
           '</div>' +
           '<div class="account-meta-line">' +
             '<span class="account-meta-text" title="' + escapeHtml(row.state_reason || "-") + '">' + escapeHtml(row.state_reason || "-") + '</span>' +
-            '<span class="account-meta-time mono">' + escapeHtml(dt(row.usage_updated_at)) + '</span>' +
+            '<span class="account-meta-time mono" title="' + escapeHtml(dt(row.usage_updated_at)) + '">' + escapeHtml(dt(row.usage_updated_at)) + '</span>' +
           '</div>' +
         '</button>';
     }
 
     function setStatus(text) {
       elements.statusLine.textContent = text;
+      elements.statusLine.title = text;
     }
 
     function setLoading(next) {
@@ -1904,8 +3276,8 @@
       elements.historyPreview.innerHTML = meta.items.map(function (row) {
         return '' +
           '<div class="history-row">' +
-            '<div class="mono">' + escapeHtml(dt(row.captured_at)) + '</div>' +
-            '<div><div class="name">健康 ' + escapeHtml(numberText(row.healthy_accounts)) + ' / 总计 ' + escapeHtml(numberText(row.total_accounts)) + '</div><div class="hint">恢复中 ' + escapeHtml(numberText(row.recovering_accounts)) + ' · 额度限制 ' + escapeHtml(numberText(row.quota_limited_accounts)) + ' · 失败 ' + escapeHtml(numberText(row.failed_accounts)) + '</div></div>' +
+            '<div class="mono">' + escapeHtml(dt(row.refresh_completed_at || row.captured_at)) + '</div>' +
+            '<div><div class="name">健康 ' + escapeHtml(numberText(row.healthy_accounts)) + ' / 总计 ' + escapeHtml(numberText(row.total_accounts)) + '</div><div class="hint">最新额度 ' + escapeHtml(dt(row.max_usage_updated_at)) + ' · 未触达 ' + escapeHtml(numberText(row.stale_accounts)) + ' · 失败 ' + escapeHtml(numberText(row.failed_accounts)) + '</div></div>' +
             '<div class="count">' + escapeHtml(shortPct(row.avg_all_7d_remaining_pct)) + '</div>' +
           '</div>';
       }).join("");
@@ -1939,6 +3311,7 @@
       var lanes = {
         immediate: [],
         today: [],
+        tomorrow: [],
         soon: [],
         later: [],
         unknown: []
@@ -1947,7 +3320,7 @@
         var key = laneKeyFor(row);
         lanes[key].push(row);
       });
-      var order = ["immediate", "today", "soon", "later", "unknown"];
+      var order = ["immediate", "today", "tomorrow", "soon", "later", "unknown"];
       var html = [];
       var total = 0;
       order.forEach(function (key) {
@@ -1956,8 +3329,14 @@
         var pagerId = "lane:" + key;
         var meta = paginate(lanes[key], pagerId, PAGE_DEFAULT_SIZE.recoveryLane);
         html.push(
-          '<section class="lane">' +
-            '<div class="lane-head"><strong>' + escapeHtml(laneLabel(key)) + '</strong><span class="pill pill-neutral">' + escapeHtml(String(lanes[key].length)) + '</span></div>' +
+          '<section class="lane' + (state.collapsedPanels[pagerId] ? ' collapsed' : '') + '">' +
+            '<div class="lane-head">' +
+              '<button class="lane-toggle" type="button" data-collapse-id="' + escapeHtml(pagerId) + '" aria-expanded="' + (state.collapsedPanels[pagerId] ? 'false' : 'true') + '">' +
+                '<span class="panel-toggle-icon lane-toggle-icon">▾</span>' +
+                '<span class="lane-toggle-text">' + escapeHtml(laneLabel(key)) + '</span>' +
+                '<span class="pill pill-neutral lane-toggle-count">' + escapeHtml(String(lanes[key].length)) + '</span>' +
+              '</button>' +
+            '</div>' +
             '<div class="lane-grid">' + meta.items.map(accountCard).join("") + '</div>' +
             '<div class="lane-pager">' + pagerHtml(pagerId, meta, "个账号") + '</div>' +
           '</section>'
@@ -1968,10 +3347,11 @@
     }
 
     function renderHistoryTable() {
-      var meta = paginate(state.payload.history || [], "history", PAGE_DEFAULT_SIZE.history);
+      var meta = paginate(sortedHistoryRows(), "history", PAGE_DEFAULT_SIZE.history);
       elements.historyCount.textContent = meta.total + " 条";
+      syncHistorySortHeaders();
       if (!meta.total) {
-        elements.historyRows.innerHTML = '<tr><td colspan="12"><div class="empty">暂无历史快照</div></td></tr>';
+        elements.historyRows.innerHTML = '<tr><td colspan="15"><div class="empty">暂无历史快照</div></td></tr>';
         elements.historyPager.innerHTML = "";
         return;
       }
@@ -1979,11 +3359,14 @@
         return '' +
           '<tr>' +
             '<td class="mono">' + escapeHtml(dt(row.captured_at)) + '</td>' +
+            '<td class="mono">' + escapeHtml(dt(row.refresh_completed_at)) + '</td>' +
+            '<td class="mono">' + escapeHtml(dt(row.max_usage_updated_at)) + '</td>' +
             '<td class="mono">' + escapeHtml(numberText(row.total_accounts)) + '</td>' +
             '<td class="mono">' + escapeHtml(numberText(row.healthy_accounts)) + '</td>' +
             '<td class="mono">' + escapeHtml(numberText(row.recovering_accounts)) + '</td>' +
             '<td class="mono">' + escapeHtml(numberText(row.quota_limited_accounts)) + '</td>' +
             '<td class="mono">' + escapeHtml(numberText(row.failed_accounts)) + '</td>' +
+            '<td class="mono">' + escapeHtml(numberText(row.stale_accounts)) + '</td>' +
             '<td class="mono">' + escapeHtml(numberText(row.tracked_7d_accounts)) + '</td>' +
             '<td class="mono">' + escapeHtml(numberText(row.schedulable_tracked_7d_accounts)) + '</td>' +
             '<td class="mono">' + escapeHtml(pct(row.avg_all_7d_remaining_pct)) + '</td>' +
@@ -1995,8 +3378,15 @@
       elements.historyPager.innerHTML = pagerHtml("history", meta, "条记录");
     }
 
+    function closeDetailPanel() {
+      state.selectedId = null;
+      state.selectedAccount = null;
+      renderDetail();
+    }
+
     function renderDetail() {
       if (!state.selectedAccount) {
+        document.body.classList.remove("detail-open");
         elements.detailSide.classList.remove("open");
         elements.sideBackdrop.classList.remove("open");
         elements.detailSide.setAttribute("aria-hidden", "true");
@@ -2048,6 +3438,7 @@
             detailItem("临时冻结原因", escapeHtml(row.temp_unschedulable_reason || "-")) +
           '</div>' +
         '</section>';
+      document.body.classList.add("detail-open");
       elements.detailSide.classList.add("open");
       elements.sideBackdrop.classList.add("open");
       elements.detailSide.setAttribute("aria-hidden", "false");
@@ -2074,6 +3465,9 @@
       sortAccounts(rows);
       var recoverableRows = recoveryCandidates(rows);
       sortRecoveryRows(recoverableRows);
+      if (elements.filterSummary) {
+        elements.filterSummary.textContent = "当前匹配 " + rows.length + " 个账号 · 恢复队列 " + recoverableRows.length + " 个 · 每个分区支持单独分页";
+      }
       renderMatrix(rows);
       renderRecoveryPreview(recoverableRows);
       renderRecovery(rows);
@@ -2108,7 +3502,7 @@
       state.payload = payload;
       var summary = payload.summary || {};
       setStatus(
-        "当前展示上次已保存结果 · 生成时间 " + dt(payload.generated_at) +
+        "当前展示按数据库现状实时聚合的结果 · 生成时间 " + dt(payload.generated_at) +
         " · 存活 " + numberText(summary.alive_accounts) +
         " / 总账号 " + numberText(summary.total_accounts) +
         " · 周额度成功 " + numberText(summary.tracked_7d_accounts)
@@ -2203,7 +3597,35 @@
         while (target && target !== document.body) {
           if (target.hasAttribute && target.hasAttribute("data-collapse-id")) {
             var id = target.getAttribute("data-collapse-id");
+            if (id === "recovery-main" && state.collapsedPanels[id]) {
+              state.collapsedPanels[id] = false;
+              writeCollapseState();
+              syncCollapsedPanels();
+              return;
+            }
             setPanelCollapsed(id, !state.collapsedPanels[id]);
+            return;
+          }
+          target = target.parentNode;
+        }
+      });
+    }
+
+    function bindHistorySort() {
+      document.body.addEventListener("click", function (event) {
+        var target = event.target;
+        while (target && target !== document.body) {
+          if (target.tagName === "TH" && target.hasAttribute("data-sort-key")) {
+            var key = target.getAttribute("data-sort-key");
+            if (!key) return;
+            if (state.historySortKey === key) {
+              state.historySortDir = state.historySortDir === "asc" ? "desc" : "asc";
+            } else {
+              state.historySortKey = key;
+              state.historySortDir = (key === "captured_at" || key === "refresh_completed_at" || key === "max_usage_updated_at") ? "desc" : "asc";
+            }
+            state.pages.history = 1;
+            renderHistoryTable();
             return;
           }
           target = target.parentNode;
@@ -2223,6 +3645,8 @@
       collapsedPanels: readCollapseState(),
       pages: {},
       pageSizes: {},
+      historySortKey: "captured_at",
+      historySortDir: "desc",
       payload: null,
       selectedId: null,
       selectedAccount: null
@@ -2237,6 +3661,7 @@
       stateFilter: document.getElementById("stateFilter"),
       planFilter: document.getElementById("planFilter"),
       accountMode: document.getElementById("accountMode"),
+      filterSummary: document.getElementById("filterSummary"),
       summaryCards: document.getElementById("summaryCards"),
       planOverviewBadge: document.getElementById("planOverviewBadge"),
       planGrid: document.getElementById("planGrid"),
@@ -2255,6 +3680,7 @@
       historyPager: document.getElementById("historyPager"),
       sideBackdrop: document.getElementById("sideBackdrop"),
       detailSide: document.getElementById("detailSide"),
+      closeDetail: document.getElementById("closeDetail"),
       detailTitle: document.getElementById("detailTitle"),
       detailSubtitle: document.getElementById("detailSubtitle"),
       detailBody: document.getElementById("detailBody")
@@ -2270,9 +3696,17 @@
       load("api/quotas/refresh");
     });
     elements.sideBackdrop.addEventListener("click", function () {
-      state.selectedId = null;
-      state.selectedAccount = null;
-      renderDetail();
+      closeDetailPanel();
+    });
+    if (elements.closeDetail) {
+      elements.closeDetail.addEventListener("click", function () {
+        closeDetailPanel();
+      });
+    }
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && state.selectedId != null) {
+        closeDetailPanel();
+      }
     });
     elements.searchInput.addEventListener("input", function () {
       resetFilteredPages();
@@ -2299,6 +3733,7 @@
     bindAccountCards();
     bindPagers();
     bindCollapsibles();
+    bindHistorySort();
     syncCollapsedPanels();
     setView("overview");
     load("api/quotas");
